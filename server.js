@@ -1,4 +1,5 @@
 import "express-async-errors";
+import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/connect.js";
@@ -15,11 +16,12 @@ const app = express();
 
 //middleware
 //make json data available on all controllers.
+app.use(cors());
 app.use(express.json());
 
 //get request
 app.get("/", (req, res) => {
-  res.send("Welcome!");
+  res.send({ msg: "Welcome!" });
 });
 //call routers
 app.use("/api/v1/auth", authRouter);
