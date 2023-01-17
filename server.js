@@ -8,6 +8,7 @@ import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 import authRouter from "./routes/authRoutes.js";
 import jobsRouter from "./routes/jobsRoutes.js";
+import morgan from "morgan";
 
 //dotenv configuration
 dotenv.config();
@@ -15,8 +16,14 @@ dotenv.config();
 const app = express();
 
 //middleware
-//make json data available on all controllers.
+
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
+
+//give access to the frontend
 app.use(cors());
+//make json data available on all controllers.
 app.use(express.json());
 
 //get request
