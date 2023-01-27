@@ -41,6 +41,9 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", async function () {
+  //shows modified values in the http request
+  // console.log(this.modifiedPaths());
+  if(!this.modifiedPaths('password')) return
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });

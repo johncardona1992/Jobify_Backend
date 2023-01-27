@@ -9,6 +9,7 @@ import errorHandlerMiddleware from "./middleware/error-handler.js";
 import authRouter from "./routes/authRoutes.js";
 import jobsRouter from "./routes/jobsRoutes.js";
 import morgan from "morgan";
+import authenticateUser from "./middleware/auth.js";
 
 //dotenv configuration
 dotenv.config();
@@ -32,7 +33,7 @@ app.get("/", (req, res) => {
 });
 //call routers
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/jobs",authenticateUser, jobsRouter);
 //handle unknown urls
 app.use(notFoundMiddleware);
 //handle errors
